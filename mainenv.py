@@ -1,12 +1,16 @@
 from nes_py import NESEnv
 
 class MegamanEnv(NESEnv):
-    """An OpenAI Gym interface to the NES game <TODO: Game Name>"""
+    """An OpenAI Gym interface to the NES game Megaman"""
 
     def __init__(self):
-        """Initialize a new <TODO: Game Name> environment."""
-        super(MegamanEnv, self).__init__('TODO: path to ROM for the game')
-        # setup any variables to use in the below callbacks here
+        """Initialize a new Megaman environment."""
+        super(MegamanEnv, self).__init__('rom/main')
+        
+        self.reset()
+
+        self._backup()
+
 
     def _will_reset(self):
         """Handle any RAM hacking after a reset occurs."""
@@ -36,6 +40,7 @@ class MegamanEnv(NESEnv):
 
     def _get_reward(self):
         """Return the reward after a step occurs."""
+        print(self.ram[0x0022])
         return 0
 
     def _get_done(self):

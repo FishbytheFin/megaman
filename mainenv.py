@@ -1,11 +1,12 @@
 from nes_py import NESEnv
+import addresses
 
 class MegamanEnv(NESEnv):
     """An OpenAI Gym interface to the NES game Megaman"""
 
     def __init__(self):
         """Initialize a new Megaman environment."""
-        super(MegamanEnv, self).__init__('rom/main')
+        super(MegamanEnv, self).__init__('rom/main.nes')
         
         self.reset()
 
@@ -16,7 +17,8 @@ class MegamanEnv(NESEnv):
         """Handle any RAM hacking after a reset occurs."""
         # use this method to perform setup before and episode resets.
         # the method returns None
-        pass
+        print(self.ram)
+    
 
     def _did_reset(self):
         """Handle any RAM hacking after a reset occurs."""
@@ -40,8 +42,18 @@ class MegamanEnv(NESEnv):
 
     def _get_reward(self):
         """Return the reward after a step occurs."""
-        print(self.ram[0x0022])
+        print("X: " + self.ram[addresses.megamanXPos])
+        print("Y: " + self.ram[addresses.megamanYPos])
+        print("Sub X: " + self.ram[addresses.megamanSubXPos])
+        print("Sub Y: " + self.ram[addresses.megamanSubYPos])
+        
         return 0
+    
+    def _get_score(self):
+        str_score = ""
+        for a in addresses.score:
+            str_score += str(a)
+        return int(str_score)    
 
     def _get_done(self):
         """Return True if the episode is over, False otherwise."""

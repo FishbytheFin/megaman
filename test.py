@@ -11,10 +11,11 @@ from actions import BASE_ACTIONS
 env = JoypadSpace(env, BASE_ACTIONS)
 
 done = True
+foo = False
 for step in range(5000):
     if done:
         state = env.reset()
-    state, reward, done, info = env.step(env.action_space.sample())
+    state, reward, done, info, foo = env.step(env.action_space.sample())
     env.render()
 
 env.close()
